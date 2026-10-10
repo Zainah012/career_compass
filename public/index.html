@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Career &amp; Skills Mentor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════
+       NAV
+  ═══════════════════════════════════ -->
+  <nav class="nav" role="navigation" aria-label="Main navigation">
+    <div class="nav-inner container">
+
+      <a href="#" class="nav-brand" aria-label="Career Compass home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 2v4M12 18v4M2 12h4M18 12h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="3" fill="currentColor"/>
+          </svg>
+        </span>
+        <span class="brand-name">AI Career &amp; Skills Mentor</span>
+      </a>
+
+      <div class="nav-links" id="nav-links">
+        <a href="#planner" class="nav-link">Planner</a>
+        <a href="#how-it-works" class="nav-link">How it works</a>
+      </div>
+
+      <!-- Theme toggle -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">
+        <!-- Moon icon (shown in dark mode) -->
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <!-- Sun icon (shown in light mode) -->
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+          <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </button>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════
+       HERO
+  ═══════════════════════════════════ -->
+  <section class="hero" aria-labelledby="hero-headline">
+    <div class="hero-inner container">
+
+      <div class="hero-copy">
+        <div class="hero-eyebrow">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          AI-Powered Career Guidance
+        </div>
+
+        <div class="sdg-badge" aria-label="Aligned with UN Sustainable Development Goal 8">
+          <span class="sdg-num">SDG 8</span>
+          Decent Work &amp; Economic Growth
+        </div>
+
+        <h1 id="hero-headline">Your future,<br><span class="grad-text">mapped out.</span></h1>
+        <p class="hero-sub">
+          Drop your goals, skills, and experience — get a personalised AI-powered roadmap in seconds. No fluff, just a clear path forward.
+        </p>
+
+        <div class="hero-features" aria-label="Key features">
+          <div class="hero-feat">
+            <span class="feat-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg>
+            </span>
+            Personalised guidance
+          </div>
+          <div class="hero-feat">
+            <span class="feat-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg>
+            </span>
+            Practical projects
+          </div>
+          <div class="hero-feat">
+            <span class="feat-icon" aria-hidden="true">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/></svg>
+            </span>
+            Skill-building resources
+          </div>
+        </div>
+
+        <a href="#planner" class="hero-cta">
+          Start planning
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+
+      <!-- lightweight CSS illustration -->
+      <div class="hero-illustration" aria-hidden="true">
+        <div class="ill-card ill-card--1">
+          <div class="ill-line ill-line--short"></div>
+          <div class="ill-line"></div>
+          <div class="ill-dot-row">
+            <span class="ill-dot ill-dot--active"></span>
+            <span class="ill-dot"></span>
+            <span class="ill-dot"></span>
+          </div>
+        </div>
+        <div class="ill-connector"></div>
+        <div class="ill-card ill-card--2">
+          <div class="ill-line ill-line--short"></div>
+          <div class="ill-line ill-line--med"></div>
+        </div>
+        <div class="ill-connector"></div>
+        <div class="ill-card ill-card--3">
+          <div class="ill-line ill-line--short"></div>
+          <div class="ill-line"></div>
+        </div>
+        <div class="ill-badge">5 milestones</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       HOW IT WORKS
+  ═══════════════════════════════════ -->
+  <section class="how-section" id="how-it-works" aria-labelledby="how-heading">
+    <div class="container">
+      <h2 class="section-label" id="how-heading">How it works</h2>
+      <div class="how-steps">
+        <div class="how-step">
+          <div class="how-num">01</div>
+          <h3>Describe your goal</h3>
+          <p>Tell us your target career, what you already know, and your experience level.</p>
+        </div>
+        <div class="how-arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="how-step">
+          <div class="how-num">02</div>
+          <h3>Generate your roadmap</h3>
+          <p>We build a tailored 5-step learning plan with resources and timelines.</p>
+        </div>
+        <div class="how-arrow" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="how-step">
+          <div class="how-num">03</div>
+          <h3>Start learning</h3>
+          <p>Follow the milestones, use the linked resources, and track your progress.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       PLANNER
+  ═══════════════════════════════════ -->
+  <main class="planner-section" id="planner">
+    <div class="container planner-inner">
+
+      <!-- ── Form panel ── -->
+      <div class="planner-form-wrap" id="form-wrap">
+        <div class="planner-form-card" id="form-section">
+
+          <div class="pfc-header">
+            <div class="pfc-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                <path d="M2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <div>
+              <h2 class="pfc-title">Build your roadmap</h2>
+              <p class="pfc-sub">Takes about 30 seconds ✨</p>
+            </div>
+          </div>
+
+          <form id="career-form" novalidate autocomplete="off">
+
+            <div class="field-pair">
+              <div class="form-group">
+                <label for="student-name">Your name <span class="opt-tag">optional</span></label>
+                <input type="text" id="student-name" name="studentName"
+                       placeholder="e.g. Aisha" autocomplete="given-name"/>
+              </div>
+              <div class="form-group">
+                <label for="experience-level">Experience level <span class="req-tag">required</span></label>
+                <div class="select-wrap">
+                  <select id="experience-level" name="experienceLevel" required>
+                    <option value="" disabled selected>Select level</option>
+                    <option value="beginner">Beginner — just starting out</option>
+                    <option value="intermediate">Intermediate — some projects done</option>
+                    <option value="advanced">Advanced — working professionally</option>
+                  </select>
+                </div>
+                <span class="field-error" id="level-error">Please select your experience level.</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="target-career">Target career <span class="req-tag">required</span></label>
+              <input type="text" id="target-career" name="targetCareer" required
+                     placeholder="e.g. Data Scientist, UX Designer, Cybersecurity Analyst"/>
+              <span class="field-hint">What role do you want in 1–2 years?</span>
+              <span class="field-error" id="career-error">Please enter your target career.</span>
+            </div>
+
+            <div class="form-group">
+              <label for="current-skills">Current skills <span class="req-tag">required</span></label>
+              <textarea id="current-skills" name="currentSkills" rows="3" required
+                        placeholder="e.g. Python basics, Excel, some HTML/CSS — even small things count!"></textarea>
+              <span class="field-hint">List tools, languages, or relevant experience you already have.</span>
+              <span class="field-error" id="skills-error">Please describe your current skills.</span>
+            </div>
+
+            <button type="button" class="btn-build" id="generate-demo-btn">
+              <span class="btn-icon" aria-hidden="true">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <span class="btn-text">Build My Roadmap</span>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+
+            <p class="demo-mode-note">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M12 8v5M12 16h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              Roadmaps are generated by GPT-4o mini — personalised to your goals.
+            </p>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- ── Results panel ── -->
+      <div class="planner-results-wrap" id="results-wrap" hidden>
+        <div class="results-card" id="results-section">
+
+          <div class="results-header">
+            <div>
+              <div class="results-eyebrow" id="results-meta">Your roadmap</div>
+              <h2 class="results-title" id="results-heading">Career Roadmap</h2>
+              <div class="progress-counter" id="progress-counter" hidden></div>
+            </div>
+            <div class="results-actions">
+              <button class="btn-icon-action" id="copy-btn" title="Copy roadmap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <rect x="9" y="9" width="13" height="13" rx="2" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+                <span>Copy</span>
+              </button>
+              <button class="btn-icon-action" id="share-btn" title="Share roadmap">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.8"/>
+                  <circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/>
+                  <circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.8"/>
+                  <path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+                <span>Share</span>
+              </button>
+              <button class="btn-icon-action" id="pdf-btn" title="Download PDF">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" stroke="currentColor" stroke-width="1.8"/>
+                  <polyline points="14,2 14,8 20,8" stroke="currentColor" stroke-width="1.8"/>
+                  <line x1="16" y1="13" x2="8" y2="13" stroke="currentColor" stroke-width="1.8"/>
+                  <line x1="16" y1="17" x2="8" y2="17" stroke="currentColor" stroke-width="1.8"/>
+                  <polyline points="10,9 9,9 8,9" stroke="currentColor" stroke-width="1.8"/>
+                </svg>
+                <span>PDF</span>
+              </button>
+              <button class="btn-icon-action btn-start-over" id="start-over-btn" title="Start over">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M1 4v6h6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M3.51 15a9 9 0 102.13-9.36L1 10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>Start over</span>
+              </button>
+            </div>
+          </div>
+
+          <div id="roadmap-output"></div>
+
+        </div>
+
+        <!-- ── Chat section ── -->
+        <div class="chat-section" id="chat-section" hidden>
+          <div class="chat-header">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+            <h3>Ask a follow-up question</h3>
+          </div>
+          <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-label="Chat messages"></div>
+          <div class="chat-input-row">
+            <input type="text" id="chat-input" class="chat-input" placeholder='e.g. "Tell me more about step 3"' aria-label="Follow-up question" />
+            <button class="chat-send-btn" id="chat-send-btn" aria-label="Send question">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M22 2L11 13M22 2L15 22l-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- ═══════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="footer-brand">AI Career &amp; Skills Mentor</span>
+      <span class="footer-copy">&copy; 2026 AI Career &amp; Skills Mentor</span>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
