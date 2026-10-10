@@ -299,7 +299,7 @@ function updateProgressBar(prog) {
 // RENDER ROADMAP
 // ══════════════════════════════════════════
 function renderRoadmap(name, career, level, steps, fallback = false) {
-  currentContext = { name, career, level, skills: document.getElementById('current-skills').value };
+  currentContext = { name, career, level, skills: document.getElementById('current-skills').value, steps };
 
   const greeting   = name.trim() ? `${esc(name.trim())}'s` : 'Your';
   const levelLabel = { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' }[level] || level;
@@ -425,7 +425,15 @@ function renderChat() {
       const res  = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: msg, context: currentContext }),
+        body: JSON.stringify({
+          message: msg,
+          context: {
+            career:  currentContext?.career  || '',
+            level:   currentContext?.level   || '',
+            name:    currentContext?.name    || '',
+            steps:   currentContext?.steps   || [],
+          },
+        }),
       });
       const data = await res.json();
       thinking.remove();

@@ -599,7 +599,32 @@ app.post('/api/chat', async (req, res) => {
     return res.json({ reply: "I'm in demo mode — AI follow-up isn't available. Try asking about a specific step in your roadmap manually." });
   }
 
-  const systemPrompt = `You are a helpful, encouraging career mentor. The user has just received a career roadmap${context ? ` for becoming a ${context.career} at ${context.level} level` : ''}. Answer their follow-up questions about the roadmap, learning resources, or career path concisely and practically. Be warm, direct, and specific. Keep replies under 150 words.`;
+  // ── Safely extract and validate context ──
+  const career = (context?.career && typeof context.career === 'string') ? context.career.trim().slice(0, 100) : '';
+  const level  = ['beginner', 'intermediate', 'advanced'].includes(context?.level) ? context.level : '';
+  const steps  = Array.isArray(context?.steps) ? context.steps.slice(0, 10) : [];
+
+  // ── Build roadmap summary for the system prompt ──
+  let roadmapSummary = '';
+  if (steps.length > 0) {
+    roadmapSummary = '\n\nHere are the exact roadmap steps the user received:\n' +
+      steps.map((s, i) => {
+        const title     = typeof s?.title       === 'string' ? s.title.slice(0, 120)       : `Step ${i + 1}`;
+        const desc      = typeof s?.description === 'string' ? s.description.slice(0, 300)  : '';
+        const resources = typeof s?.resources   === 'string' ? s.resources.slice(0, 200)    : '';
+        const tag       = typeof s?.tag         === 'string' ? s.tag.slice(0, 40)           : '';
+        return `Step ${i + 1} [${tag}]: ${title}\n  ${desc}${resources ? `\n  Resources: ${resources}` : ''}`;
+      }).join('\n\n');
+  }
+
+  const careerLine = career ? ` for becoming a ${career}${level ? ` at ${level} level` : ''}` : '';
+
+  const systemPrompt =
+    `You are a helpful, encouraging career mentor. The user has just received a personalised career roadmap${careerLine}.` +
+    `${roadmapSummary}\n\n` +
+    `Answer their follow-up questions accurately using the roadmap above. ` +
+    `If they ask about a specific step, reference that step's title and resources directly. ` +
+    `Be warm, direct, and specific. Keep replies under 150 words.`;
 
   try {
     const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
