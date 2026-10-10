@@ -290,6 +290,28 @@
 
           <div id="roadmap-output"></div>
 
+          <!-- ── Revise panel ── -->
+          <div class="revise-wrap" id="revise-wrap">
+            <div class="revise-header">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+              <span class="revise-title">Revise this roadmap</span>
+            </div>
+            <p class="revise-hint">Describe a constraint or change — e.g. "I only have 3 months", "I already know Python", "I can study 5 hours a week"</p>
+            <div class="revise-input-row">
+              <input type="text" id="revise-input" class="revise-input"
+                placeholder='e.g. "I only have 3 months and 5 hours a week"'
+                maxlength="300" aria-label="Revision instruction" />
+              <button class="btn-revise" id="revise-btn">
+                <span class="revise-btn-text">Revise</span>
+                <span class="spinner" aria-hidden="true"></span>
+              </button>
+            </div>
+            <p class="revise-error" id="revise-error" hidden></p>
+          </div>
+
         </div>
 
         <!-- ── Chat section ── -->

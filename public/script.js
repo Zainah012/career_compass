@@ -561,6 +561,100 @@ if (downloadBtn) {
 }
 
 // ══════════════════════════════════════════
+// ROADMAP REVISION
+// ══════════════════════════════════════════
+(function initRevise() {
+  const reviseBtn   = document.getElementById('revise-btn');
+  const reviseInput = document.getElementById('revise-input');
+  const reviseError = document.getElementById('revise-error');
+
+  if (!reviseBtn || !reviseInput) return;
+
+  function setReviseLoading(on) {
+    reviseBtn.disabled = on;
+    reviseBtn.classList.toggle('loading', on);
+  }
+
+  function showReviseError(msg) {
+    reviseError.textContent = msg;
+    reviseError.hidden = false;
+  }
+
+  function clearReviseError() {
+    reviseError.textContent = '';
+    reviseError.hidden = true;
+  }
+
+  reviseBtn.addEventListener('click', async () => {
+    clearReviseError();
+    const instruction = reviseInput.value.trim();
+
+    if (!instruction) {
+      showReviseError('Please describe your constraint or change before revising.');
+      reviseInput.focus();
+      return;
+    }
+    if (instruction.length > 300) {
+      showReviseError('Please keep your instruction under 300 characters.');
+      return;
+    }
+    if (!currentContext || !Array.isArray(currentContext.steps) || currentContext.steps.length === 0) {
+      showReviseError('No roadmap found to revise. Please generate one first.');
+      return;
+    }
+
+    setReviseLoading(true);
+
+    try {
+      const res = await fetch('/api/roadmap/revise', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          steps:       currentContext.steps,
+          instruction: instruction,
+          career:      currentContext.career || '',
+          level:       currentContext.level  || '',
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showReviseError(data.error || 'Revision failed. Please try again.');
+        return;
+      }
+
+      // Re-render with revised steps, preserving name/career/level
+      reviseInput.value = '';
+      renderRoadmap(
+        currentContext.name   || '',
+        currentContext.career || '',
+        currentContext.level  || 'beginner',
+        data.steps,
+        false   // not a fallback — this is AI-revised
+      );
+
+      // Scroll to top of results
+      document.getElementById('results-wrap')
+        .scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    } catch {
+      showReviseError('Could not reach the server. Make sure the app is running and try again.');
+    } finally {
+      setReviseLoading(false);
+    }
+  });
+
+  // Allow Enter key to trigger revision
+  reviseInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') reviseBtn.click();
+  });
+
+  // Clear error on typing
+  reviseInput.addEventListener('input', clearReviseError);
+})();
+
+// ══════════════════════════════════════════
 // GENERATE BUTTON
 // ══════════════════════════════════════════
 generateBtn.addEventListener('click', async () => {

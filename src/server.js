@@ -583,6 +583,112 @@ function buildDemoSteps(career, skills, level) {
   return fallback[validLevel];
 }
 
+// ── POST /api/roadmap/revise ──
+// Takes the current roadmap steps + a user revision instruction
+// and returns a revised set of steps in the same JSON format.
+app.post('/api/roadmap/revise', async (req, res) => {
+  const { steps, instruction, career, level } = req.body;
+
+  // Validate instruction
+  if (!instruction || typeof instruction !== 'string' || instruction.trim().length === 0) {
+    return res.status(400).json({ error: 'Revision instruction is required.' });
+  }
+  if (instruction.trim().length > 300) {
+    return res.status(400).json({ error: 'Instruction must be 300 characters or fewer.' });
+  }
+
+  // Validate steps
+  if (!Array.isArray(steps) || steps.length === 0) {
+    return res.status(400).json({ error: 'No roadmap steps found to revise.' });
+  }
+
+  // Validate career / level
+  const safeCareer = (career && typeof career === 'string') ? career.trim().slice(0, 100) : 'this career';
+  const safeLevel  = ['beginner', 'intermediate', 'advanced'].includes(level) ? level : 'beginner';
+
+  // No API key — fall back gracefully
+  if (!process.env.GROQ_API_KEY) {
+    return res.status(503).json({ error: 'AI revision is not available in demo mode.' });
+  }
+
+  // Build a summary of the current roadmap for context
+  const currentSummary = steps.slice(0, 10).map((s, i) => {
+    const title     = typeof s?.title       === 'string' ? s.title.slice(0, 120)      : `Step ${i + 1}`;
+    const desc      = typeof s?.description === 'string' ? s.description.slice(0, 300) : '';
+    const resources = typeof s?.resources   === 'string' ? s.resources.slice(0, 200)   : '';
+    const tag       = typeof s?.tag         === 'string' ? s.tag.slice(0, 40)          : '';
+    return `Step ${i + 1} [${tag}]: ${title}\n  ${desc}${resources ? `\n  Resources: ${resources}` : ''}`;
+  }).join('\n\n');
+
+  const prompt = `
+You are an expert career coach. A ${safeLevel}-level learner targeting a career as a ${safeCareer} has the following roadmap:
+
+${currentSummary}
+
+The user wants to revise this roadmap with the following constraint or instruction:
+"${instruction.trim()}"
+
+Return ONLY a valid JSON object with this exact structure (no markdown, no extra text):
+{
+  "steps": [
+    {
+      "title": "Step title",
+      "description": "2-3 sentence explanation adjusted to the user's constraint.",
+      "resources": "1-2 specific courses, tools, or websites relevant to this step.",
+      "tag": "Revised timeframe, e.g. Week 1-2"
+    }
+  ]
+}
+
+Rules:
+- Produce exactly 5 steps.
+- Adjust the pace, depth, and timeframes to match the user's constraint.
+- Keep steps specific to the career "${safeCareer}" — do not use generic advice.
+- Preserve strong resources from the original where still relevant.
+- Do not include any text outside the JSON object.
+`.trim();
+
+  try {
+    const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
+    const completion = await client.chat.completions.create({
+      model: 'qwen/qwen3.8-27b',
+      messages: [{ role: 'user', content: prompt }],
+      temperature: 0.7,
+      max_tokens: 1200,
+    });
+
+    const raw = completion.choices[0].message.content.trim();
+
+    let parsed;
+    try {
+      // Strip markdown code fences if model wraps the JSON
+      const cleaned = raw.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
+      parsed = JSON.parse(cleaned);
+    } catch {
+      console.error('Revise: non-JSON response:', raw.slice(0, 200));
+      return res.status(500).json({ error: 'The AI returned an unexpected format. Please try again.' });
+    }
+
+    if (!Array.isArray(parsed.steps) || parsed.steps.length === 0) {
+      return res.status(500).json({ error: 'The AI revision was missing steps. Please try again.' });
+    }
+
+    return res.json({ steps: parsed.steps, revised: true });
+
+  } catch (err) {
+    console.error('Revise API error:', err.message);
+
+    if (err.status === 429 || err.status === 402 ||
+        err.message?.includes('quota') || err.message?.includes('rate_limit')) {
+      return res.status(429).json({ error: 'Rate limit reached. Please wait a moment and try again.' });
+    }
+    if (err.status === 401) {
+      return res.status(401).json({ error: 'Invalid API key. Please check your .env file.' });
+    }
+    return res.status(500).json({ error: 'Something went wrong while revising. Please try again.' });
+  }
+});
+
 // ── POST /api/chat ──
 // Follow-up questions about a generated roadmap
 app.post('/api/chat', async (req, res) => {
